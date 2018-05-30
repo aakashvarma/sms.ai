@@ -3,6 +3,7 @@ import csv
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn import preprocessing
 
 class spam():
 
@@ -14,8 +15,16 @@ class spam():
             os.chdir(loc)
             f = open(filename, 'r')
             file = csv.reader(f, delimiter = ',')
+
             df = pd.DataFrame(np.array(list(file)))
-            print (df.head())
+            df.columns = df.iloc[0]
+            df = df[1:]
+
+            le = preprocessing.LabelEncoder()
+            le.fit(df['v1'])
+            df['v1'] = le.transform(df['v1'])
+            print(df.head())
+
         except IOError:
             print ('PROBLEM READING: ' + filename)
 
@@ -25,9 +34,6 @@ if __name__ == '__main__':
     filename = 'spam.csv'
     s = spam()
     s.data_input(loc, filename)
-
-
-
 
 
 
