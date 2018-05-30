@@ -23,7 +23,9 @@ class spam():
             le = preprocessing.LabelEncoder()
             le.fit(df['v1'])
             df['v1'] = le.transform(df['v1'])
-            print(df.head())
+
+            self.df = df
+            # print (self.df.head())
 
         except IOError:
             print ('PROBLEM READING: ' + filename)
