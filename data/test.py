@@ -38,9 +38,9 @@ c = []
 for i in range(len(df.v2)):
     review = re.sub('[^a-zA-Z]', ' ', corpus[i])
     review = [i for i in review.lower().split() if i not in stop]
-    l = [lmtzr.lemmatize(x) for x in review]
-    s = stemmer.stemWords(l)
-    review = ' '.join(s)
+    # l = [lmtzr.lemmatize(x) for x in review]
+    # s = stemmer.stemWords(l)
+    review = ' '.join(review)
     c.append(review)
 
 # Creating the Bag of Words model
@@ -62,7 +62,9 @@ y_pred = classifier.predict(X_test)
 cm = confusion_matrix(y_test, y_pred)
 print (cm)
 
-
+# Score
+from sklearn.metrics import accuracy_score
+print(accuracy_score(y_test, y_pred))
 
 
 
