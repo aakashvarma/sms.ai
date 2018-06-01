@@ -7,7 +7,7 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import confusion_matrix
 
 from nltk.corpus import stopwords
@@ -38,9 +38,9 @@ c = []
 for i in range(len(df.v2)):
     review = re.sub('[^a-zA-Z]', ' ', corpus[i])
     review = [i for i in review.lower().split() if i not in stop]
-    # l = [lmtzr.lemmatize(x) for x in review]
-    # s = stemmer.stemWords(l)
-    review = ' '.join(review)
+    l = [lmtzr.lemmatize(x) for x in review]
+    s = stemmer.stemWords(l)
+    review = ' '.join(s)
     c.append(review)
 
 # Creating the Bag of Words model
@@ -52,7 +52,7 @@ y = df.v1
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
 
 # Fitting Naive Bayes to the Training set
-classifier = GaussianNB()
+classifier = MultinomialNB()
 classifier.fit(X_train, y_train)
 
 # Predicting the Test set results
