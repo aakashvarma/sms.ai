@@ -85,9 +85,11 @@ if __name__ == '__main__':
     filename = 'spam.csv'
     s = spam()
     s.data_input(loc, filename)
-    s.data_split()
-    s.vectorizer()
     s.data_cleaning()
+    s.vectorizer()
+    s.data_split()
+    s.classifier()
+    
 
 
 
