@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.metrics import confusion_matrix
@@ -42,6 +43,21 @@ class spam():
 
         except IOError:
             print ('PROBLEM READING: ' + filename)
+
+    def data_cleaning(self):
+        stop = set(stopwords.words('english'))
+        lmtzr = WordNetLemmatizer()
+        stemmer = snowballstemmer.stemmer('english')
+        c = np.array(df.v2)
+        corpus = []
+        for i in range(len(df.v2)):
+            review = re.sub('[^a-zA-Z]', ' ', c[i])
+            review = [i for i in review.lower().split() if i not in stop]
+            l = [lmtzr.lemmatize(x) for x in review]
+            s = stemmer.stemWords(l)
+            review = ' '.join(s)
+            corpus.append(review)
+
 
     def data_split(self):
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.df['v2'], self.df['v1'], test_size=0.33, random_state=42)
