@@ -48,16 +48,16 @@ class spam():
         stop = set(stopwords.words('english'))
         lmtzr = WordNetLemmatizer()
         stemmer = snowballstemmer.stemmer('english')
-        c = np.array(df.v2)
-        corpus = []
-        for i in range(len(df.v2)):
+        c = np.array(self.df.v2)
+        self.corpus = []
+        for i in range(len(self.df.v2)):
             review = re.sub('[^a-zA-Z]', ' ', c[i])
             review = [i for i in review.lower().split() if i not in stop]
             l = [lmtzr.lemmatize(x) for x in review]
             s = stemmer.stemWords(l)
             review = ' '.join(s)
-            corpus.append(review)
-
+            self.corpus.append(review)
+        print (self.corpus)
 
     def data_split(self):
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.df['v2'], self.df['v1'], test_size=0.33, random_state=42)
@@ -80,6 +80,7 @@ if __name__ == '__main__':
     s.data_input(loc, filename)
     s.data_split()
     s.vectorizer()
+    s.data_cleaning()
 
 
 
