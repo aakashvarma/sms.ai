@@ -21,8 +21,10 @@ import snowballstemmer
 
 class spam():
 
+
     def __init__(self):
         pass
+
 
     def data_input(self, loc, filename):
         try:
@@ -44,6 +46,7 @@ class spam():
         except IOError:
             print ('PROBLEM READING: ' + filename)
 
+
     def data_cleaning(self):
         stop = set(stopwords.words('english'))
         lmtzr = WordNetLemmatizer()
@@ -57,18 +60,22 @@ class spam():
             s = stemmer.stemWords(l)
             review = ' '.join(s)
             self.corpus.append(review)
-        print (self.corpus)
+        print (self.corpus) 
+
+    
+    def vectorizer(self):
+       cv = CountVectorizer()
+       self.X = cv.fit_transform(self.coupus).toarray()
+       self.y = self.df['v1']
+
 
     def data_split(self):
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.df['v2'], self.df['v1'], test_size=0.33, random_state=42)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y,  test_size = 0.20)
 
-    def vectorizer(self):
-        count_vect = CountVectorizer()
-        X_train_counts = count_vect.fit_transform(np.array(self.X_train))
-        tfidf_transformer = TfidfTransformer()
-        X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
-        print (X_train_counts.shape)
-        print (X_train_tfidf.shape)
+
+    def classifier(self):
+        classifier = BernoulliNB()
+        classifier.fit(self.X_train, self.y_train)
 
 
 
