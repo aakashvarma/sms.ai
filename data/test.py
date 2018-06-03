@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.naive_bayes import MultinomialNB
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import BernoulliNB
 from sklearn.metrics import confusion_matrix
 
 from nltk.corpus import stopwords
@@ -44,15 +44,19 @@ for i in range(len(df.v2)):
     c.append(review)
 
 # Creating the Bag of Words model
+
 cv = CountVectorizer()
 X = cv.fit_transform(c).toarray()
 y = df.v1
+
+# vectorizer = TfidfVectorizer()
+# X = vectorizer.fit_transform(c).toarray()
 
 # Splitting the dataset into the Training set and Test set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
 
 # Fitting Naive Bayes to the Training set
-classifier = MultinomialNB()
+classifier = BernoulliNB()
 classifier.fit(X_train, y_train)
 
 # Predicting the Test set results
