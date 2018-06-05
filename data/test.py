@@ -45,12 +45,12 @@ for i in range(len(df.v2)):
 
 # Creating the Bag of Words model
 
-cv = CountVectorizer()
-X = cv.fit_transform(c).toarray()
+# cv = CountVectorizer()
+# X = cv.fit_transform(c).toarray()
 y = df.v1
 
-# vectorizer = TfidfVectorizer()
-# X = vectorizer.fit_transform(c).toarray()
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(c).toarray()
 
 # Splitting the dataset into the Training set and Test set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
