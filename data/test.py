@@ -9,6 +9,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.metrics import confusion_matrix
+from sklearn import model_selection
+
+from sklearn.metrics import accuracy_score
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
@@ -16,6 +19,7 @@ from nltk.stem.porter import PorterStemmer
 from nltk.stem.wordnet import WordNetLemmatizer
 
 import snowballstemmer
+import pickle
 
 # dada input
 f = open('spam.csv', 'r')
@@ -59,17 +63,25 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20)
 classifier = BernoulliNB()
 classifier.fit(X_train, y_train)
 
+# Save the model to disk
+filename = 'finalized_model.sav'
+pickle.dump(classifier, open(filename, 'wb'))
+
+# Some time later .......
+
+loaded_model = pickle.load(open(filename, 'rb'))
+result = loaded_model.score(X_test, y_test)
+
 # Predicting the Test set results
-y_pred = classifier.predict(X_test)
+# y_pred = classifier.predict(X_test)
 
 # Making the Confusion Matrix
-cm = confusion_matrix(y_test, y_pred)
-print (cm)
+# cm = confusion_matrix(y_test, y_pred)
+# print (cm)
 
 # Score
-from sklearn.metrics import accuracy_score
-print(accuracy_score(y_test, y_pred))
-
+# print(accuracy_score(y_test, y_pred))
+print (result)
 
 
 
