@@ -1,4 +1,5 @@
 # sms.ai
+[![Build Status](https://travis-ci.org/aakashvarma/sms.ai.svg?branch=master)](https://travis-ci.org/aakashvarma/sms.ai)
 
 One Paragraph of project description goes here
 
